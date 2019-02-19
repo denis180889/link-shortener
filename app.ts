@@ -1,12 +1,20 @@
 import express = require('express');
 import bodyParser = require('body-parser');
 import randomstring = require("randomstring");
+import path = require('path');
 
 const app = express();
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+
+app.use(express.static(path.join(__dirname, `public`)));
+
+app.set(`views`, path.join(__dirname, `views`));
+app.set(`view engine`, `pug`);
+
+
 
 interface Link {
     id: number;
@@ -16,6 +24,10 @@ interface Link {
 }
 
 const links: Link[] = [];
+
+app.get('/', (req, res) => {
+    return res.render(`index`);
+})
 
 app.post('/link', (req, res) => {
     const code = generateShortenLink();

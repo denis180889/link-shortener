@@ -14,8 +14,6 @@ app.use(express.static(path.join(__dirname, `public`)));
 app.set(`views`, path.join(__dirname, `views`));
 app.set(`view engine`, `pug`);
 
-
-
 interface Link {
     id: number;
     originalLink: string;
@@ -30,6 +28,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/link', (req, res) => {
+    console.log("I am here");
     const code = generateShortenLink();
     const shortenLink = req.protocol + '://' + req.get('host') + '/' + code;
     const link = {
@@ -39,7 +38,7 @@ app.post('/link', (req, res) => {
         shortenLink: shortenLink
     };
     links.push(link);
-    res.send(link);
+    res.send(link.shortenLink);
 })
 
 app.get('/:shortenLink', (req, res) => {

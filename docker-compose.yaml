@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  db:
+    image: mongo:latest
+    container_name: db
+    networks: 
+      - link_shortener_net
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    networks: 
+      - link_shortener_net
+    ports: 
+      - 3000:3000
+    links: 
+      - db
+networks:
+  link_shortener_net:
+    driver: bridge

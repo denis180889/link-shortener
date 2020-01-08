@@ -29,7 +29,7 @@ app.post('/link', (req: any, res: any) => {
     console.log("Application is working");
     const code = generateShortenLink();
     const shortenLink = req.protocol + '://' + req.get('host') + '/' + code;
-    const link = {
+    const link: Link = {
         originalLink: req.body.link,
         code: code,
         shortenLink: shortenLink
